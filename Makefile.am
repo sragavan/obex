@@ -123,7 +123,7 @@ service_in_files += client/obex-client.service.in
 libexec_PROGRAMS += client/obex-client
 
 client_obex_client_SOURCES = $(gdbus_sources) $(gobex_sources) \
-				$(gwobex_sources) $(btio_sources) \
+				$(btio_sources) \
 				client/main.c src/log.h src/log.c \
 				client/manager.h client/manager.c \
 				client/session.h client/session.c \
@@ -135,7 +135,7 @@ client_obex_client_SOURCES = $(gdbus_sources) $(gobex_sources) \
 				client/agent.h client/agent.c \
 				client/driver.h client/driver.c
 
-client_obex_client_LDADD = @GLIB_LIBS@ @DBUS_LIBS@ @OPENOBEX_LIBS@ @BLUEZ_LIBS@
+client_obex_client_LDADD = @GLIB_LIBS@ @DBUS_LIBS@ @BLUEZ_LIBS@
 endif
 
 service_DATA = $(service_in_files:.service.in=.service)
