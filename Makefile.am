@@ -14,11 +14,6 @@ test_files = test/simple-agent test/send-files \
 gdbus_sources = gdbus/gdbus.h gdbus/mainloop.c gdbus/watch.c \
 					gdbus/object.c gdbus/polkit.c
 
-gwobex_sources = gwobex/gw-obex.h gwobex/gw-obex.c \
-			gwobex/obex-priv.h gwobex/obex-priv.c \
-			gwobex/obex-xfer.h gwobex/obex-xfer.c \
-			gwobex/utils.h gwobex/utils.c gwobex/log.h
-
 btio_sources = btio/btio.h btio/btio.c
 
 gobex_sources = gobex/gobex.h gobex/gobex.c \
@@ -141,7 +136,7 @@ AM_CFLAGS = @OPENOBEX_CFLAGS@ @BLUEZ_CFLAGS@ @EBOOK_CFLAGS@ \
 			-DOBEX_PLUGIN_BUILTIN -DPLUGINDIR=\""$(plugindir)"\"
 
 INCLUDES = -I$(builddir)/src -I$(srcdir)/src -I$(srcdir)/plugins \
-				-I$(srcdir)/gdbus -I$(srcdir)/gwobex \
+				-I$(srcdir)/gdbus \
 				-I$(srcdir)/btio -I$(srcdir)/gobex
 
 CLEANFILES = $(service_DATA) $(builtin_files)
