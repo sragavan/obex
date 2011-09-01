@@ -104,12 +104,6 @@ plugindir = $(libdir)/obex/plugins
 
 plugin_LTLIBRARIES =
 
-noinst_PROGRAMS += test/obex-test
-
-test_obex_test_SOURCES = $(gwobex_sources) test/main.c
-
-test_obex_test_LDADD = @OPENOBEX_LIBS@ @BLUEZ_LIBS@ @GLIB_LIBS@
-
 src/plugin.$(OBJEXT): src/builtin.h
 
 src/builtin.h: src/genbuiltin $(builtin_sources)
