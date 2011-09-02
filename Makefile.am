@@ -77,7 +77,7 @@ libexec_PROGRAMS += src/obexd
 src_obexd_SOURCES = $(gdbus_sources) $(builtin_sources) $(btio_sources) \
 			$(gobex_sources) src/main.c src/obexd.h \
 			src/glib-helper.h src/plugin.h src/plugin.c \
-			src/log.h src/log.c src/dbus.h src/manager.c \
+			src/log.h src/log.c src/manager.h src/manager.c \
 			src/obex.h src/obex.c src/obex-priv.h \
 			src/mimetype.h src/mimetype.c \
 			src/service.h src/service.c \
