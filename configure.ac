@@ -89,11 +89,6 @@ AC_CHECK_LIB(dbus-1, dbus_connection_can_send_type, dummy=yes,
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
-PKG_CHECK_MODULES(OPENOBEX, openobex, dummy=yes,
-				AC_MSG_ERROR(libopenobex is required))
-AC_SUBST(OPENOBEX_CFLAGS)
-AC_SUBST(OPENOBEX_LIBS)
-
 PKG_CHECK_MODULES(BLUEZ, bluez, dummy=yes,
 				AC_MSG_ERROR(libbluetooth is required))
 AC_SUBST(BLUEZ_CFLAGS)
