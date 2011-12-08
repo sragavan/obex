@@ -251,6 +251,15 @@ Methods		void SetLocation(string location)
 
 			Send an entire Phonebook Object store to remote device
 
+Message Access hierarchy
+=========================
+
+Service		org.openobex.client
+Interface	org.openobex.MessageAccess
+Object path	[variable prefix]/{session0,session1,...}
+
+Methods
+
 Transfer hierarchy
 ==================
 
