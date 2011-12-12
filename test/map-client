@@ -14,6 +14,8 @@ def parse_options():
     parser.add_option("-l", "--lsdir", action="store_true", dest="ls_dir",
                       help="List folders in current directory")
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose")
+    parser.add_option("-L", "--lsmsg", action="store", dest="ls_msg",
+                      help="List messages in supplied CWD subdir")
 
     return parser.parse_args()
 
@@ -53,5 +55,8 @@ if  __name__ == '__main__':
 
     if options.ls_dir:
         print map.GetFolderListing(dict())
+
+    if options.ls_msg is not None:
+	print map.GetMessagesListing(options.ls_msg, dict())
 
     mainloop.run()
