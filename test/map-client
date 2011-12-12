@@ -11,6 +11,8 @@ def parse_options():
                       help="Device to connect", metavar="DEVICE")
     parser.add_option("-c", "--chdir", dest="new_dir",
                       help="Change current directory to DIR", metavar="DIR")
+    parser.add_option("-l", "--lsdir", action="store_true", dest="ls_dir",
+                      help="List folders in current directory")
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose")
 
     return parser.parse_args()
@@ -48,5 +50,8 @@ if  __name__ == '__main__':
 
     if options.new_dir:
         set_folder(map, options.new_dir)
+
+    if options.ls_dir:
+        print map.GetFolderListing(dict())
 
     mainloop.run()
