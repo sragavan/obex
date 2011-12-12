@@ -258,7 +258,10 @@ Service		org.openobex.client
 Interface	org.openobex.MessageAccess
 Object path	[variable prefix]/{session0,session1,...}
 
-Methods
+Methods		void SetFolder(string name)
+
+			Set working directory for current session, *name* may
+			be the directory name or '..[/dir]'.
 
 Transfer hierarchy
 ==================
