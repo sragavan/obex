@@ -57,6 +57,6 @@ if  __name__ == '__main__':
         print map.GetFolderListing(dict())
 
     if options.ls_msg is not None:
-	print map.GetMessagesListing(options.ls_msg, dict())
+	print map.GetMessageListing(options.ls_msg, dict())
 
     mainloop.run()
