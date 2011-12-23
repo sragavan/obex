@@ -1,3 +1,9 @@
+ver 0.43:
+	Remove OpenOBEX dependency.
+	Fix multiple issues with PBAP and vCard encoding.
+	Add initial support for handling Message Access Profile.
+	Add support for internal and fully asynchronous OBEX library.
+
 ver 0.42:
 	Fix issue with freeing buffer before transfer is complete.
 	Fix issue with invalid memory read when pulling phonebook.
