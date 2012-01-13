@@ -1,3 +1,9 @@
+ver 0.44:
+	Fix issue with incorrect path during authorization.
+	Fix issue with missing reset after transfer completion.
+	Fix issue with invalid memory access and PBAP.
+	Add support for OBEX Single Response Mode.
+
 ver 0.43:
 	Remove OpenOBEX dependency.
 	Fix multiple issues with PBAP and vCard encoding.
