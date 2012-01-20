@@ -117,6 +117,7 @@ client_obex_client_SOURCES = $(gdbus_sources) $(gobex_sources) \
 				client/main.c src/log.h src/log.c \
 				client/manager.h client/manager.c \
 				client/session.h client/session.c \
+				client/bluetooth.h client/bluetooth.c \
 				client/sync.h client/sync.c \
 				client/pbap.h client/pbap.c \
 				client/ftp.h client/ftp.c \
