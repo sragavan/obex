@@ -1,3 +1,14 @@
+ver 0.45:
+	Fix issue with SRM and GET requests.
+	Fix issue with SRM headers and CONNECT.
+	Fix issue with ABORT request not being not processed.
+	Fix issue with file deletion when push gets aborted.
+	Fix issue with missing parsing of PUT application parameter.
+	Fix issue with parsing of PBAP client application parameter.
+	Fix issue with byte-order conversion and L2CAP.
+	Add support for OBEX over L2CAP transport.
+	Add support for MAP AP core functions.
+
 ver 0.44:
 	Fix issue with incorrect path during authorization.
 	Fix issue with missing reset after transfer completion.
