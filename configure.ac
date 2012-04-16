@@ -78,14 +78,8 @@ AC_CHECK_LIB(glib-2.0, g_slist_free_full, dummy=yes,
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
 
-PKG_CHECK_MODULES(DBUS, dbus-1, dummy=yes,
-				AC_MSG_ERROR(libdbus-1 is required))
-AC_CHECK_LIB(dbus-1, dbus_watch_get_unix_fd, dummy=yes,
-	AC_DEFINE(NEED_DBUS_WATCH_GET_UNIX_FD, 1,
-		[Define to 1 if you need the dbus_watch_get_unix_fd() function.]))
-AC_CHECK_LIB(dbus-1, dbus_connection_can_send_type, dummy=yes,
-	AC_DEFINE(NEED_DBUS_CONNECTION_CAN_SEND_TYPE, 1,
-		[Define to 1 if you need the dbus_connection_can_send_type() funnction.]))
+PKG_CHECK_MODULES(DBUS, dbus-1 >= 1.4, dummy=yes,
+				AC_MSG_ERROR(D-Bus >= 1.4 is required))
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
