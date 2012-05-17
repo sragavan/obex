@@ -1,3 +1,9 @@
+ver 0.46:
+	Update client transfer API.
+	Fix issue with using invalid PSM numbers.
+	Add support for MAP message listing parameters.
+	Add support for MAP folder listing retrieval.
+
 ver 0.45:
 	Fix issue with SRM and GET requests.
 	Fix issue with SRM headers and CONNECT.
