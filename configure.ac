@@ -79,8 +79,8 @@ PKG_CHECK_MODULES(DBUS, dbus-1 >= 1.4, dummy=yes,
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
-PKG_CHECK_MODULES(BLUEZ, bluez, dummy=yes,
-				AC_MSG_ERROR(libbluetooth is required))
+PKG_CHECK_MODULES(BLUEZ, bluez >= 4.99, dummy=yes,
+				AC_MSG_ERROR(BlueZ >= 4.99 is required))
 AC_SUBST(BLUEZ_CFLAGS)
 AC_SUBST(BLUEZ_LIBS)
 
