@@ -496,7 +496,7 @@ done:
 	g_free(parent_path);
 }
 
-static const const GDBusMethodTable introspect_methods[] = {
+static const GDBusMethodTable introspect_methods[] = {
 	{ _GDBUS_METHOD("Introspect", "", "s", NULL,
 			GDBUS_ARGS({ "xml", "s" }), introspect) },
 	{ }
