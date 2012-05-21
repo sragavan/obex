@@ -65,9 +65,9 @@ Service		org.openobex.client
 Interface	org.openobex.ObjectPush
 Object path	[variable prefix]/{session0,session1,...}
 
-Methods		void SendFiles(array{string} files)
+Methods		void SendFile(string sourcefile)
 
-			Send one or multiple local files to the remote device.
+			Send one local file to the remote device.
 
 		void PullBusinessCard(string targetfile)
 
