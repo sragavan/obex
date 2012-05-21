@@ -20,10 +20,6 @@ Methods		object CreateSession(dict device)
 
 			Unregister session and abort pending transfers.
 
-		string GetCapabilities(dict device)
-
-			Get remote device capabilities.
-
 Properties	string Target
 
 		string Source
@@ -51,6 +47,10 @@ Methods		dict GetProperties()
 		void ReleaseAgent(object agent)
 
 			Release a previously assigned OBEX agent.
+
+		string GetCapabilities()
+
+			Get remote device capabilities.
 
 Properties	string Source [readonly]
 
