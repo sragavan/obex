@@ -11,25 +11,7 @@ Service		org.openobex.client
 Interface	org.openobex.Client
 Object path	/
 
-Methods		void SendFiles(dict device, array{string} files, object agent)
-
-			Send one or multiple local files to the specified
-			device. The device is configured via properties. At
-			least the Destination property should be specified.
-
-		void PullBusinessCard(dict device, string file)
-
-			Request the business card from a remote device and
-			store it in the local file.
-
-		void ExchangeBusinessCards(dict device, string clientfile,
-								string file)
-
-			Push the client's business card to the remote device
-			and then retrieve the remote business card and store
-			it in a local file.
-
-		object CreateSession(dict device)
+Methods		object CreateSession(dict device)
 
 			Create a new OBEX session. The device is configured
 			via properties like in SendFiles.
@@ -75,6 +57,28 @@ Properties	string Source [readonly]
 		string Destination [readonly]
 
 		byte Channel [readonly]
+
+Object Push hierarchy
+=====================
+
+Service		org.openobex.client
+Interface	org.openobex.ObjectPush
+Object path	[variable prefix]/{session0,session1,...}
+
+Methods		void SendFiles(array{string} files)
+
+			Send one or multiple local files to the remote device.
+
+		void PullBusinessCard(string targetfile)
+
+			Request the business card from a remote device and
+			store it in the local file.
+
+		void ExchangeBusinessCards(string clientfile, string targetfile)
+
+			Push the client's business card to the remote device
+			and then retrieve the remote business card and store
+			it in a local file.
 
 File Transfer hierarchy
 =======================
