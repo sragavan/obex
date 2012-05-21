@@ -20,4 +20,5 @@ session_path = client.CreateSession({"Destination": sys.argv[1],
 opp = dbus.Interface(bus.get_object("org.openobex.client", session_path),
 					"org.openobex.ObjectPush")
 
-opp.SendFiles(files)
+for f in files:
+	opp.SendFile(f)
