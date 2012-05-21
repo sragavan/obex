@@ -7,14 +7,14 @@ bus = dbus.SessionBus()
 client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
 					"org.openobex.Client")
 
-if (len(sys.argv) < 2):
-	print "Usage: %s <device> [target]" % (sys.argv[0])
+if (len(sys.argv) < 3):
+	print "Usage: %s <device> <target>" % (sys.argv[0])
 	sys.exit(1)
 
-if (len(sys.argv) == 3):
-	dict = {"Destination": sys.argv[1],
-		"Target": sys.argv[2]}
-else:
-	dict = {"Destination": sys.argv[1]}
+print "Creating Session"
+session_path = client.CreateSession({"Destination": sys.argv[1],
+						"Target": sys.argv[2]})
+session = dbus.Interface(bus.get_object("org.openobex.client", session_path),
+							"org.openobex.Session")
 
-print client.GetCapabilities(dict)
+print session.GetCapabilities()
