@@ -15,8 +15,7 @@ if (len(sys.argv) < 3):
 files = [os.path.realpath(f) for f in sys.argv[2:]]
 
 print "Creating Session"
-session_path = client.CreateSession({"Destination": sys.argv[1],
-					"Target": "OPP"})
+session_path = client.CreateSession(sys.argv[1], { "Target": "OPP" })
 opp = dbus.Interface(bus.get_object("org.openobex.client", session_path),
 					"org.openobex.ObjectPush")
 

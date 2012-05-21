@@ -9,7 +9,7 @@ client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
 						"org.openobex.Client")
 
 print "Creating Session"
-session_path = client.CreateSession({"Destination": sys.argv[1], "Target": "PBAP"})
+session_path = client.CreateSession(sys.argv[1], { "Target": "PBAP" })
 pbap = dbus.Interface(bus.get_object("org.openobex.client", session_path),
 						"org.openobex.PhonebookAccess")
 session = dbus.Interface(bus.get_object("org.openobex.client", session_path),

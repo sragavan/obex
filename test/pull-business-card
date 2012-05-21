@@ -29,8 +29,7 @@ if __name__ == '__main__':
 		sys.exit(1)
 
 	print "Creating Session"
-	session_path = client.CreateSession({"Destination": sys.argv[1],
-						"Target": "OPP"})
+	session_path = client.CreateSession(sys.argv[1], { "Target": "OPP" })
 	opp = dbus.Interface(bus.get_object("org.openobex.client",
 						session_path),
 						"org.openobex.ObjectPush")

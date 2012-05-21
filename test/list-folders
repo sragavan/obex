@@ -9,7 +9,7 @@ def list_folder(folder):
 	client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
 				"org.openobex.Client")
 
-	session_path = client.CreateSession({ "Destination": sys.argv[1], "Target": "ftp"})
+	session_path = client.CreateSession(sys.argv[1], { "Target": "ftp" })
 
 	ftp = dbus.Interface(bus.get_object("org.openobex.client", session_path),
 			     "org.openobex.FileTransfer")

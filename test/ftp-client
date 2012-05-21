@@ -135,8 +135,7 @@ if  __name__ == '__main__':
     client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
                             "org.openobex.Client")
 
-    session_path = client.CreateSession({ "Destination": options.device,
-                                          "Target": "ftp"})
+    session_path = client.CreateSession(options.device, { "Target": "ftp" })
 
     session = dbus.Interface(bus.get_object("org.openobex.client", session_path),
                  "org.openobex.Session")

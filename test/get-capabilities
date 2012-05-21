@@ -12,8 +12,7 @@ if (len(sys.argv) < 3):
 	sys.exit(1)
 
 print "Creating Session"
-session_path = client.CreateSession({"Destination": sys.argv[1],
-						"Target": sys.argv[2]})
+session_path = client.CreateSession(sys.argv[1], { "Target": sys.argv[2] })
 session = dbus.Interface(bus.get_object("org.openobex.client", session_path),
 							"org.openobex.Session")
 
