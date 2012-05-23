@@ -9,7 +9,7 @@ Agent hierarchy
 ===============
 
 Service		unique name
-Interface	org.openobex.Agent
+Interface	org.bluez.obex.Agent
 Object path	freely definable
 
 Methods
@@ -21,8 +21,8 @@ Methods
 			Returns the full path (including the filename) where
 			the object shall be stored.
 
-			Possible errors: org.openobex.Error.Rejected
-			                 org.openobex.Error.Canceled
+			Possible errors: org.bluez.obex.Error.Rejected
+			                 org.bluez.obex.Error.Canceled
 
 		void Cancel()
 
