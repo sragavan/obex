@@ -124,7 +124,6 @@ client_obex_client_SOURCES = $(gdbus_sources) $(gobex_sources) \
 				client/opp.h client/opp.c \
 				client/map.h client/map.c \
 				client/transfer.h client/transfer.c \
-				client/agent.h client/agent.c \
 				client/transport.h client/transport.c \
 				client/dbus.h client/dbus.c \
 				client/driver.h client/driver.c \
