@@ -312,6 +312,16 @@ Properties	string Name [readonly]
 
 			Complete name of the file being received or sent.
 
+		uint64 Progress [readonly, optional]
+
+			Number of bytes transferred. For queued transfers, this
+			value will not be present.
+
+Signals		PropertyChanged(string name, variant value)
+
+			This signal indicates a changed value of the given
+			property.
+
 Agent hierarchy
 ===============
 
