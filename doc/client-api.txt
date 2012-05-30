@@ -322,6 +322,15 @@ Signals		PropertyChanged(string name, variant value)
 			This signal indicates a changed value of the given
 			property.
 
+		void Complete()
+
+			Informs that the transfer has completed successfully.
+
+		void Error(string code, string message)
+
+			Informs that the transfer has been terminated because
+			of some error.
+
 Agent hierarchy
 ===============
 
