@@ -111,7 +111,7 @@ File Transfer hierarchy
 =======================
 
 Service		org.bluez.obex.client
-Interface	org.openobex.FileTransfer
+Interface	org.bluez.obex.FileTransfer
 Object path	[variable prefix]/{session0,session1,...}
 
 Methods		void ChangeFolder(string folder)
