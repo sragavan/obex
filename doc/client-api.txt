@@ -184,7 +184,7 @@ Phonebook Access hierarchy
 =======================
 
 Service		org.bluez.obex.client
-Interface	org.openobex.PhonebookAccess
+Interface	org.bluez.obex.PhonebookAccess
 Object path	[variable prefix]/{session0,session1,...}
 
 Methods		void Select(string location, string phonebook)
