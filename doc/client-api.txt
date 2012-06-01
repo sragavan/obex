@@ -298,7 +298,7 @@ Synchronization hierarchy
 =======================
 
 Service		org.bluez.obex.client
-Interface	org.openobex.Synchronization
+Interface	org.bluez.obex.Synchronization
 Object path	[variable prefix]/{session0,session1,...}
 
 Methods		void SetLocation(string location)
