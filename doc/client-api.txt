@@ -8,8 +8,8 @@ Copyright (C) 2011-2012  BMW Car IT GmbH. All rights reserved.
 Client hierarchy
 ================
 
-Service		org.openobex.client
-Interface	org.openobex.Client
+Service		org.bluez.obex.client
+Interface	org.bluez.obex.Client
 Object path	/
 
 Methods		object CreateSession(string destination, dict args)
@@ -39,7 +39,7 @@ Methods		object CreateSession(string destination, dict args)
 Session hierarchy
 =================
 
-Service		org.openobex.client
+Service		org.bluez.obex.client
 Interface	org.openobex.Session
 Object path	[variable prefix]/{session0,session1,...}
 
@@ -60,7 +60,7 @@ Properties	string Source [readonly]
 Object Push hierarchy
 =====================
 
-Service		org.openobex.client
+Service		org.bluez.obex.client
 Interface	org.openobex.ObjectPush
 Object path	[variable prefix]/{session0,session1,...}
 
@@ -110,7 +110,7 @@ Methods		object, dict SendFile(string sourcefile)
 File Transfer hierarchy
 =======================
 
-Service		org.openobex.client
+Service		org.bluez.obex.client
 Interface	org.openobex.FileTransfer
 Object path	[variable prefix]/{session0,session1,...}
 
@@ -183,7 +183,7 @@ Methods		void ChangeFolder(string folder)
 Phonebook Access hierarchy
 =======================
 
-Service		org.openobex.client
+Service		org.bluez.obex.client
 Interface	org.openobex.PhonebookAccess
 Object path	[variable prefix]/{session0,session1,...}
 
@@ -297,7 +297,7 @@ Methods		void Select(string location, string phonebook)
 Synchronization hierarchy
 =======================
 
-Service		org.openobex.client
+Service		org.bluez.obex.client
 Interface	org.openobex.Synchronization
 Object path	[variable prefix]/{session0,session1,...}
 
@@ -343,7 +343,7 @@ Methods		void SetLocation(string location)
 Message Access hierarchy
 =========================
 
-Service		org.openobex.client
+Service		org.bluez.obex.client
 Interface	org.openobex.MessageAccess
 Object path	[variable prefix]/{session0,session1,...}
 
@@ -355,7 +355,7 @@ Methods		void SetFolder(string name)
 Transfer hierarchy
 ==================
 
-Service		org.openobex.client
+Service		org.bluez.obex.client
 Interface	org.openobex.Transfer
 Object path	[variable prefix]/{transfer0,transfer1,...}
 
