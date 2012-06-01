@@ -61,7 +61,7 @@ Object Push hierarchy
 =====================
 
 Service		org.bluez.obex.client
-Interface	org.openobex.ObjectPush
+Interface	org.bluez.obex.ObjectPush
 Object path	[variable prefix]/{session0,session1,...}
 
 Methods		object, dict SendFile(string sourcefile)
