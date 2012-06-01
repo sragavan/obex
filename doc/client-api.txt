@@ -356,7 +356,7 @@ Transfer hierarchy
 ==================
 
 Service		org.bluez.obex.client
-Interface	org.openobex.Transfer
+Interface	org.bluez.obex.Transfer
 Object path	[variable prefix]/{transfer0,transfer1,...}
 
 Methods		dict GetProperties()
