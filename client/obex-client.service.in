@@ -1,3 +1,3 @@
 [D-BUS Service]
-Name=org.openobex.client
+Name=org.bluez.obex.client
 Exec=@libexecdir@/obex-client
