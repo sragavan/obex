@@ -205,10 +205,21 @@ Methods		void Select(string location, string phonebook)
 				"mch":	missing call history
 				"cch":	combination of ich och mch
 
-		string PullAll()
+		object, dict PullAll(string targetfile)
 
 			Return the entire phonebook object from the PSE server
-			in plain string with vcard format.
+			in plain string with vcard format, and store it in
+			a local file.
+
+			If an empty target file is given, a name will be
+			automatically calculated for the temporary file.
+
+			The returned path represents the newly created transfer,
+			which should be used to find out if the content has been
+			successfully transferred or if the operation fails.
+
+			The properties of this transfer are also returned along
+			with the object path, to avoid a call to GetProperties.
 
 		array{string vcard, string name} List()
 
@@ -216,10 +227,20 @@ Methods		void Select(string location, string phonebook)
 			vcard : name paired string, for example "1.vcf" :
 				"John".
 
-		string Pull(string vcard)
+		object, dict Pull(string vcard, string targetfile)
 
-			Retrieve the vcard in the current phonebook object
-			for example : Pull("0.vcf")
+			Retrieve the vcard in the current phonebook object and
+			store it in a local file.
+
+			If an empty target file is given, a name will be
+			automatically calculated for the temporary file.
+
+			The returned path represents the newly created transfer,
+			which should be used to find out if the content has been
+			successfully transferred or if the operation fails.
+
+			The properties of this transfer are also returned along
+			with the object path, to avoid a call to GetProperties.
 
 		array{string vcard, string name}
 		Search(string field, string value)
