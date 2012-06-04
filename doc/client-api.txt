@@ -138,21 +138,32 @@ Methods		void ChangeFolder(string folder)
 				uint64 Accessed : Last access
 				uint64 Created : Creation date
 
-		void GetFile(string targetfile, string sourcefile)
+		object, dict GetFile(string targetfile, string sourcefile)
 
 			Copy the source file (from remote device) to the
 			target file (on local filesystem).
 
-			A new Transfer object is created to represent this
-			transaction.
+			If an empty target file is given, a name will be
+			automatically calculated for the temporary file.
 
-		void PutFile(string sourcefile, string targetfile)
+			The returned path represents the newly created transfer,
+			which should be used to find out if the content has been
+			successfully transferred or if the operation fails.
+
+			The properties of this transfer are also returned along
+			with the object path, to avoid a call to GetProperties.
+
+		object, dict PutFile(string sourcefile, string targetfile)
 
 			Copy the source file (from local filesystem) to the
 			target file (on remote device).
 
-			A new Transfer object is created to represent this
-			transaction.
+			The returned path represents the newly created transfer,
+			which should be used to find out if the content has been
+			successfully transferred or if the operation fails.
+
+			The properties of this transfer are also returned along
+			with the object path, to avoid a call to GetProperties.
 
 		void CopyFile(string sourcefile, string targetfile)
 
