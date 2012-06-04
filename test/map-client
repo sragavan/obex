@@ -7,55 +7,53 @@ import dbus.mainloop.glib
 from optparse import OptionParser
 
 def parse_options():
-    parser.add_option("-d", "--device", dest="device",
-                      help="Device to connect", metavar="DEVICE")
-    parser.add_option("-c", "--chdir", dest="new_dir",
-                      help="Change current directory to DIR", metavar="DIR")
-    parser.add_option("-l", "--lsdir", action="store_true", dest="ls_dir",
-                      help="List folders in current directory")
-    parser.add_option("-v", "--verbose", action="store_true", dest="verbose")
-    parser.add_option("-L", "--lsmsg", action="store", dest="ls_msg",
-                      help="List messages in supplied CWD subdir")
+	parser.add_option("-d", "--device", dest="device",
+			help="Device to connect", metavar="DEVICE")
+	parser.add_option("-c", "--chdir", dest="new_dir",
+			help="Change current directory to DIR", metavar="DIR")
+	parser.add_option("-l", "--lsdir", action="store_true", dest="ls_dir",
+			help="List folders in current directory")
+	parser.add_option("-v", "--verbose", action="store_true", dest="verbose")
+	parser.add_option("-L", "--lsmsg", action="store", dest="ls_msg",
+			help="List messages in supplied CWD subdir")
 
-    return parser.parse_args()
+	return parser.parse_args()
 
 def set_folder(session, new_dir):
-    for node in new_dir.split("/"):
-        session.SetFolder(node)
+	for node in new_dir.split("/"):
+		session.SetFolder(node)
 
 if  __name__ == '__main__':
 
-    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+	dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-    parser = OptionParser()
+	parser = OptionParser()
 
-    (options, args) = parse_options()
+	(options, args) = parse_options()
 
-    if not options.device:
-        parser.print_help()
-        exit(0)
+	if not options.device:
+		parser.print_help()
+		exit(0)
 
-    bus = dbus.SessionBus()
-    mainloop = gobject.MainLoop()
+	bus = dbus.SessionBus()
+	mainloop = gobject.MainLoop()
 
-    client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
-                            "org.openobex.Client")
+	client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
+				"org.openobex.Client")
 
-    session_path = client.CreateSession( options.device, { "Target": "map" })
+	path = client.CreateSession(options.device, { "Target": "map" })
 
-    session = dbus.Interface(bus.get_object("org.openobex.client", session_path),
-                 "org.openobex.Session")
+	obj = bus.get_object("org.openobex.client", path)
+	session = dbus.Interface(obj, "org.openobex.Session")
+	map = dbus.Interface(obj, "org.openobex.MessageAccess")
 
-    map = dbus.Interface(bus.get_object("org.openobex.client", session_path),
-                 "org.openobex.MessageAccess")
+	if options.new_dir:
+		set_folder(map, options.new_dir)
 
-    if options.new_dir:
-        set_folder(map, options.new_dir)
+	if options.ls_dir:
+		print map.GetFolderListing(dict())
 
-    if options.ls_dir:
-        print map.GetFolderListing(dict())
+	if options.ls_msg is not None:
+		print map.GetMessageListing(options.ls_msg, dict())
 
-    if options.ls_msg is not None:
-	print map.GetMessageListing(options.ls_msg, dict())
-
-    mainloop.run()
+	mainloop.run()
