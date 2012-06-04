@@ -299,7 +299,7 @@ Properties	string Name [readonly]
 			Size of the transferred object. If the size is
 			unknown, then this property will not be present.
 
-		string Filename [readonly]
+		string Filename [readonly, optional]
 
 			Complete name of the file being received or sent.
 
