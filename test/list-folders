@@ -6,13 +6,13 @@ import dbus
 
 def list_folder(folder):
 	bus = dbus.SessionBus()
-	client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
-				"org.openobex.Client")
+	client = dbus.Interface(bus.get_object("org.bluez.obex.client", "/"),
+				"org.bluez.obex.Client")
 
-	session_path = client.CreateSession(sys.argv[1], { "Target": "ftp" })
+	path = client.CreateSession(sys.argv[1], { "Target": "ftp" })
 
-	ftp = dbus.Interface(bus.get_object("org.openobex.client", session_path),
-			     "org.openobex.FileTransfer")
+	ftp = dbus.Interface(bus.get_object("org.bluez.obex.client", path),
+				"org.bluez.obex.FileTransfer")
 
 	if folder:
 		for node in folder.split("/"):
