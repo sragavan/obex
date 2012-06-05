@@ -38,14 +38,14 @@ if  __name__ == '__main__':
 	bus = dbus.SessionBus()
 	mainloop = gobject.MainLoop()
 
-	client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
-				"org.openobex.Client")
+	client = dbus.Interface(bus.get_object("org.bluez.obex.client", "/"),
+				"org.bluez.obex.Client")
 
 	path = client.CreateSession(options.device, { "Target": "map" })
 
-	obj = bus.get_object("org.openobex.client", path)
-	session = dbus.Interface(obj, "org.openobex.Session")
-	map = dbus.Interface(obj, "org.openobex.MessageAccess")
+	obj = bus.get_object("org.bluez.obex.client", path)
+	session = dbus.Interface(obj, "org.bluez.obex.Session")
+	map = dbus.Interface(obj, "org.bluez.obex.MessageAccess")
 
 	if options.new_dir:
 		set_folder(map, options.new_dir)
