@@ -38,17 +38,17 @@ class FtpClient:
 		self.transfer_path = None
 		self.verbose = verbose
 		bus = dbus.SessionBus()
-		obj = bus.get_object("org.openobex.client", session_path)
-		self.session = dbus.Interface(obj, "org.openobex.Session")
-		self.ftp = dbus.Interface(obj, "org.openobex.FileTransfer")
+		obj = bus.get_object("org.bluez.obex.client", session_path)
+		self.session = dbus.Interface(obj, "org.bluez.obex.Session")
+		self.ftp = dbus.Interface(obj, "org.bluez.obex.FileTransfer")
 		bus.add_signal_receiver(self.transfer_complete,
-					dbus_interface="org.openobex.Transfer",
-					signal_name="Complete",
-					path_keyword="path")
+				dbus_interface="org.bluez.obex.Transfer",
+				signal_name="Complete",
+				path_keyword="path")
 		bus.add_signal_receiver(self.transfer_error,
-					dbus_interface="org.openobex.Transfer",
-					signal_name="Error",
-					path_keyword="path")
+				dbus_interface="org.bluez.obex.Transfer",
+				signal_name="Error",
+				path_keyword="path")
 
 	def create_transfer_reply(self, reply):
 		(path, properties) = reply
@@ -130,14 +130,13 @@ if  __name__ == '__main__':
 	bus = dbus.SessionBus()
 	mainloop = gobject.MainLoop()
 
-	client = dbus.Interface(bus.get_object("org.openobex.client", "/"),
-				"org.openobex.Client")
+	client = dbus.Interface(bus.get_object("org.bluez.obex.client", "/"),
+				"org.bluez.obex.Client")
 
 	print "Creating Session"
-	session_path = client.CreateSession(options.device,
-					{ "Target": "ftp" })
+	path = client.CreateSession(options.device, { "Target": "ftp" })
 
-	ftp_client = FtpClient(session_path)
+	ftp_client = FtpClient(path)
 
 	if options.new_dir:
 		ftp_client.change_folder(options.new_dir)
