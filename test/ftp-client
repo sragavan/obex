@@ -35,7 +35,9 @@ def parse_options():
 
 class FtpClient:
 	def __init__(self, session_path, verbose=False):
+		self.progress = 0
 		self.transfer_path = None
+		self.transfer_size = 0
 		self.verbose = verbose
 		bus = dbus.SessionBus()
 		obj = bus.get_object("org.bluez.obex.client", session_path)
@@ -49,10 +51,16 @@ class FtpClient:
 				dbus_interface="org.bluez.obex.Transfer",
 				signal_name="Error",
 				path_keyword="path")
+		if self.verbose:
+			bus.add_signal_receiver(self.transfer_progress,
+				dbus_interface="org.bluez.obex.Transfer",
+				signal_name="PropertyChanged",
+				path_keyword="path")
 
 	def create_transfer_reply(self, reply):
 		(path, properties) = reply
 		self.transfer_path = path
+		self.transfer_size = properties["Size"]
 		if self.verbose:
 			print "Transfer created: %s" % path
 
@@ -76,6 +84,19 @@ class FtpClient:
 			return
 		print "Transfer finished with error %s: %s" % (code, message)
 		mainloop.quit()
+
+	def transfer_progress(self, prop, value, path):
+		if path != self.transfer_path:
+			return
+
+		if prop != "Progress":
+			return
+
+		speed = (value - self.progress) / 1000
+		print "Transfer progress %d/%d at %d kBps" % (value,
+							self.transfer_size,
+							speed)
+		self.progress = value
 
 	def change_folder(self, new_dir):
 		for node in new_dir.split("/"):
@@ -136,7 +157,7 @@ if  __name__ == '__main__':
 	print "Creating Session"
 	path = client.CreateSession(options.device, { "Target": "ftp" })
 
-	ftp_client = FtpClient(path)
+	ftp_client = FtpClient(path, options.verbose)
 
 	if options.new_dir:
 		ftp_client.change_folder(options.new_dir)
