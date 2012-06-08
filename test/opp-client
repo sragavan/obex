@@ -14,12 +14,16 @@ def parse_options():
 			help="Pull vcard and store in FILE", metavar="FILE")
 	parser.add_option("-s", "--send", dest="send_file",
 			help="Send FILE", metavar="FILE")
+	parser.add_option("-v", "--verbose", action="store_true",
+			dest="verbose")
 
 	return parser.parse_args()
 
 class OppClient:
-	def __init__(self, session_path):
+	def __init__(self, session_path, verbose=False):
+		self.progress = 0
 		self.transfer_path = None
+		self.verbose = verbose
 		bus = dbus.SessionBus()
 		obj = bus.get_object("org.bluez.obex.client", session_path)
 		self.session = dbus.Interface(obj, "org.bluez.obex.Session")
@@ -32,11 +36,18 @@ class OppClient:
 				dbus_interface="org.bluez.obex.Transfer",
 				signal_name="Error",
 				path_keyword="path")
+		if self.verbose:
+			bus.add_signal_receiver(self.transfer_progress,
+				dbus_interface="org.bluez.obex.Transfer",
+				signal_name="PropertyChanged",
+				path_keyword="path")
 
 	def create_transfer_reply(self, reply):
 		(path, properties) = reply
 		self.transfer_path = path
-		print "Transfer created: %s" % path
+		self.transfer_size = properties["Size"]
+		if self.verbose:
+			print "Transfer created: %s" % path
 
 	def error(self, err):
 		print err
@@ -45,7 +56,8 @@ class OppClient:
 	def transfer_complete(self, path):
 		if path != self.transfer_path:
 			return
-		print "Transfer finished"
+		if self.verbose:
+			print "Transfer finished"
 		mainloop.quit()
 
 	def transfer_error(self, code, message, path):
@@ -53,6 +65,19 @@ class OppClient:
 			return
 		print "Transfer finished with error %s: %s" % (code, message)
 		mainloop.quit()
+
+	def transfer_progress(self, prop, value, path):
+		if path != self.transfer_path:
+			return
+
+		if prop != "Progress":
+			return
+
+		speed = (value - self.progress) / 1000
+		print "Transfer progress %d/%d at %d kBps" % (value,
+							self.transfer_size,
+							speed)
+		self.progress = value
 
 	def pull_business_card(self, filename):
 		self.opp.PullBusinessCard(os.path.abspath(filename),
@@ -85,7 +110,7 @@ if  __name__ == '__main__':
 	print "Creating Session"
 	path = client.CreateSession(options.device, { "Target": "OPP" })
 
-	opp_client = OppClient(path)
+	opp_client = OppClient(path, options.verbose)
 
 	if options.pull_to_file:
 		opp_client.pull_business_card(options.pull_to_file)
