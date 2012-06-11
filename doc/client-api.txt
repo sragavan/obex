@@ -344,7 +344,7 @@ Message Access hierarchy
 =========================
 
 Service		org.bluez.obex.client
-Interface	org.openobex.MessageAccess
+Interface	org.bluez.obex.MessageAccess
 Object path	[variable prefix]/{session0,session1,...}
 
 Methods		void SetFolder(string name)
