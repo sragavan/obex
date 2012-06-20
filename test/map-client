@@ -20,8 +20,7 @@ def parse_options():
 	return parser.parse_args()
 
 def set_folder(session, new_dir):
-	for node in new_dir.split("/"):
-		session.SetFolder(node)
+	session.SetFolder(new_dir)
 
 if  __name__ == '__main__':
 
