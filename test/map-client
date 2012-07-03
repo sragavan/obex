@@ -6,6 +6,27 @@ import dbus
 import dbus.mainloop.glib
 from optparse import OptionParser
 
+from pprint import pformat
+
+def unwrap(x):
+    """Hack to unwrap D-Bus values, so that they're easier to read when
+    printed. Taken from d-feet """
+
+    if isinstance(x, list):
+        return map(unwrap, x)
+
+    if isinstance(x, tuple):
+        return tuple(map(unwrap, x))
+
+    if isinstance(x, dict):
+        return dict([(unwrap(k), unwrap(v)) for k, v in x.iteritems()])
+
+    for t in [unicode, str, long, int, float, bool]:
+        if isinstance(x, t):
+            return t(x)
+
+    return x
+
 def parse_options():
 	parser.add_option("-d", "--device", dest="device",
 			help="Device to connect", metavar="DEVICE")
@@ -54,6 +75,7 @@ if  __name__ == '__main__':
 			print "%s/" % (i["Name"])
 
 	if options.ls_msg is not None:
-		print map.GetMessageListing(options.ls_msg, dict())
+		ret = map.GetMessageListing(options.ls_msg, dict())
+		print pformat(unwrap(ret))
 
 	mainloop.run()
