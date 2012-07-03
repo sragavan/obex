@@ -352,6 +352,15 @@ Methods		void SetFolder(string name)
 			Set working directory for current session, *name* may
 			be the directory name or '..[/dir]'.
 
+		array{dict} GetFolderListing(dict filter)
+
+			Returns a dictionary containing information about
+			the current folder content.
+
+			The following keys are defined:
+
+				string Name : Folder name
+
 Transfer hierarchy
 ==================
 
