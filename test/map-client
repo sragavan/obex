@@ -50,7 +50,8 @@ if  __name__ == '__main__':
 		set_folder(map, options.new_dir)
 
 	if options.ls_dir:
-		print map.GetFolderListing(dict())
+		for i in map.GetFolderListing(dict()):
+			print "%s/" % (i["Name"])
 
 	if options.ls_msg is not None:
 		print map.GetMessageListing(options.ls_msg, dict())
