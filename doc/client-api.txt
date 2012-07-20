@@ -288,7 +288,7 @@ Methods		void Select(string location, string phonebook)
 		array{string} ListFilterFields()
 
 			Return All Available fields that can be used in
-			SefFilter method.
+			SetFilter method.
 
 		array{string} GetFilter()
 
