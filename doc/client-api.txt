@@ -361,7 +361,8 @@ Methods		void SetFolder(string name)
 
 				string Name : Folder name
 
-		array{object, dict} GetMessageListing(string folder, dict filter)
+		array{object, dict} GetMessageListing(string folder,
+								dict filter)
 
 			Returns an array containing the messages found in the
 			given folder.
