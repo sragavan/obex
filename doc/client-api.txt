@@ -378,10 +378,6 @@ Methods		void SetFolder(string name)
 
 			Properties:
 
-				string Handle:
-
-					Message handle
-
 				string Subject:
 
 					Message subject
