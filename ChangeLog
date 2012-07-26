@@ -1,3 +1,7 @@
+ver 0.47:
+	Update client session API.
+	Change D-Bus namespace to org.bluez.obex.
+
 ver 0.46:
 	Update client transfer API.
 	Fix issue with using invalid PSM numbers.
