@@ -166,11 +166,12 @@ plugins/phonebook.c: plugins/@PHONEBOOK_DRIVER@
 plugins/messages.c: plugins/@MESSAGES_DRIVER@
 	$(AM_V_GEN)$(LN_S) @abs_top_srcdir@/$< $@
 
-TESTS = unit/test-gobex-header unit/test-gobex-packet unit/test-gobex \
-						unit/test-gobex-transfer
+TESTS = unit/test-gobex-apparam unit/test-gobex-header unit/test-gobex-packet \
+				unit/test-gobex unit/test-gobex-transfer
 
 noinst_PROGRAMS += unit/test-gobex-header unit/test-gobex-packet \
-				unit/test-gobex unit/test-gobex-transfer
+			unit/test-gobex unit/test-gobex-transfer \
+			unit/test-gobex-apparam
 
 unit_test_gobex_SOURCES = $(gobex_sources) unit/test-gobex.c \
 							unit/util.c unit/util.h
@@ -187,6 +188,10 @@ unit_test_gobex_header_LDADD = @GLIB_LIBS@
 unit_test_gobex_transfer_SOURCES = $(gobex_sources) unit/util.c unit/util.h \
 						unit/test-gobex-transfer.c
 unit_test_gobex_transfer_LDADD = @GLIB_LIBS@
+
+unit_test_gobex_apparam_SOURCES = $(gobex_sources) unit/util.c unit/util.h \
+						unit/test-gobex-apparam.c
+unit_test_gobex_apparam_LDADD = @GLIB_LIBS@
 
 if READLINE
 noinst_PROGRAMS += tools/test-client
