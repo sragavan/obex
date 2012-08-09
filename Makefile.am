@@ -63,7 +63,7 @@ builtin_sources += plugins/pbap.c plugins/phonebook.h \
 
 builtin_modules += mas
 builtin_sources += plugins/mas.c plugins/messages.h \
-			src/map_ap.c src/map_ap.h
+			src/map_ap.h
 
 builtin_modules += irmc
 builtin_sources += plugins/irmc.c
@@ -127,7 +127,7 @@ client_obex_client_SOURCES = $(gdbus_sources) $(gobex_sources) \
 				client/transport.h client/transport.c \
 				client/dbus.h client/dbus.c \
 				client/driver.h client/driver.c \
-				src/map_ap.h src/map_ap.c
+				src/map_ap.h
 
 client_obex_client_LDADD = @GLIB_LIBS@ @DBUS_LIBS@ @BLUEZ_LIBS@
 endif
