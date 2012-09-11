@@ -520,7 +520,7 @@ Service		org.bluez.obex.client
 Interface	org.bluez.obex.Message
 Object path	[variable prefix]/{session0,session1,...}/{message0,...}
 
-Methods		object, dict Get(string targetfile)
+Methods		object, dict Get(string targetfile, boolean attachment)
 
 			Download message and store it in the target file.
 
