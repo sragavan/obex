@@ -105,15 +105,15 @@ class MapClient:
 		self.map.SetFolder(new_dir)
 
 	def list_folders(self):
-		for i in self.map.GetFolderListing(dict()):
+		for i in self.map.ListFolders(dict()):
 			print "%s/" % (i["Name"])
 
 	def list_messages(self, folder):
-		ret = self.map.GetMessageListing(folder, dict())
+		ret = self.map.ListMessages(folder, dict())
 		print pformat(unwrap(ret))
 
 	def get_message(self, handle):
-		self.map.GetMessageListing("", dict())
+		self.map.ListMessages("", dict())
 		path = self.path + "/message" + handle
 		obj = bus.get_object("org.bluez.obex.client", path)
 		msg = dbus.Interface(obj, "org.bluez.obex.Message")
