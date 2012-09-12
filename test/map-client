@@ -117,7 +117,7 @@ class MapClient:
 		path = self.path + "/message" + handle
 		obj = bus.get_object("org.bluez.obex.client", path)
 		msg = dbus.Interface(obj, "org.bluez.obex.Message")
-		msg.Get("",reply_handler=self.create_transfer_reply,
+		msg.Get("", True, reply_handler=self.create_transfer_reply,
 						error_handler=self.error)
 
 if  __name__ == '__main__':
