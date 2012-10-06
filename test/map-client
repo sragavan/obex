@@ -51,6 +51,8 @@ def parse_options():
 			help="Deletes the message from the folder")
 	parser.add_option("--mark-undeleted", action="store", dest="mark_msg_undeleted",
 			help="Undeletes the message")
+	parser.add_option("-u", "--update-inbox", action="store_true", dest="update_inbox",
+			help="Checks for new mails")
 
 	return parser.parse_args()
 
@@ -145,6 +147,9 @@ class MapClient:
 		msg = dbus.Interface(obj, "org.bluez.obex.Message")
 		msg.SetProperty (prop, flag);
 
+	def update_inbox(self):
+		self.map.UpdateInbox()
+
 
 if  __name__ == '__main__':
 
@@ -196,5 +201,7 @@ if  __name__ == '__main__':
 	if options.mark_msg_undeleted is not None:
 		map_client.set_message_property(options.mark_msg_undeleted, "Deleted", False)
 
+	if options.update_inbox:
+		map_client.update_inbox()
 
 	mainloop.run()
