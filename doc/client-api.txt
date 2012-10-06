@@ -460,6 +460,11 @@ Methods		void SetFolder(string name)
 
 					Message protected flag
 
+		void UpdateInbox(void)
+
+			Request remote to update its inbox.
+
+
 Filter:		uint16 Offset:
 
 			Offset of the first item, default is 0
