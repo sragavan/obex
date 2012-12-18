@@ -10,6 +10,76 @@ from optparse import OptionParser
 
 from pprint import pformat
 
+email = "BEGIN:BMSG\n\
+VERSION:1.0\n\
+STATUS:UNREAD\n\
+TYPE:EMAIL\n\
+FOLDER:telecom/msg/inbox\n\
+BEGIN:VCARD\n\
+VERSION:2.1\n\
+N:Mat\n\
+EMAIL:sragavan@gmail.com\n\
+END:VCARD\n\
+BEGIN:BENV\n\
+BEGIN:VCARD\n\
+VERSION:2.1\n\
+N:Tablet\n\
+EMAIL:meegotabletmail@gmail.com\n\
+END:VCARD\n\
+BEGIN:BBODY\n\
+PARTID:0\n\
+ENCODING:8BIT\n\
+CHARSET:UTF-8\n\
+LENGTH:966\n\
+BEGIN:MSG\n\
+MIME-Version: 1.0\n\
+Content-Type: text/plain\n\
+Content-Transfer-Encoding: quoted-printable\n\
+Date:Thu, 6 Dec 2012 21:13:04 +0530\n\
+Subject:You have more friends on Facebook than you think\n\
+To:\"MeeGo Tablet\" <meegotabletmail@gmail.com>\n\
+Cc:\n\
+Message-ID:2147483660\n\
+From:\"Evolutio\" <update+zj4yo_2yso49@facebookmail.com>\n\
+\n\
+facebook=20Find=20more=20of=20your=20friends.=20The=20fastest=20way=20to=20find=20all=20of=20your=20frie=\n\
+nds=20on=20Facebook=20is=20importing=20your=20email=20contacts.=20Once=20you've=20imported=20your=20=\n\
+contacts=20you=20can=20view,=20manage=20or=20delete=20them=20at=20any=20time.=20Find=20Friends=20Go=20to=\n\
+=20Facebook=20This=20message=20was=20sent=20to=20meegotabletmail@gmail.com.=20If=20you=20don't=20w=\n\
+ant=20to=20receive=20these=20emails=20from=20Facebook=20in=20the=20future,=20please=20unsubscribe.=\n\
+=0D=0AFacebook,=20Inc.,=20Attention:=20Department=20415,=20PO=20Box=2010005,=20Palo=20Alto,=20CA=\n\
+=2094303\n\
+END:MSG\n\
+END:BBODY\n\
+END:BENV\n\
+END:BMSG"
+
+phone= "BEGIN:BMSG\n\
+VERSION:1.0\n\
+STATUS:UNREAD\n\
+TYPE:SMS_GSM\n\
+FOLDER:telecom/msg/outbox\n\
+BEGIN:VCARD\n\
+VERSION:3.0\n\
+N:Tablet\n\
+TEL;TYPE=WORK:0123456789\n\
+END:VCARD\n\
+BEGIN:BENV\n\
+BEGIN:VCARD\n\
+VERSION:3.0\n\
+N:Srini\n\
+TEL;TYPE=WORK:1234567890\n\
+END:VCARD\n\
+BEGIN:BBODY\n\
+CHARSET:UTF-8\n\
+LENGTH:10\n\
+BEGIN:MSG\n\
+Properties\n\
+END:MSG\n\
+END:BBODY\n\
+END:BENV\n\
+END:BMSG"
+
 def unwrap(x):
     """Hack to unwrap D-Bus values, so that they're easier to read when
     printed. Taken from d-feet """
@@ -52,6 +122,8 @@ def parse_options():
 	parser.add_option("--mark-undeleted", action="store", dest="mark_msg_undeleted",
 			help="Undeletes the message")
 	parser.add_option("-u", "--update-inbox", action="store_true", dest="update_inbox",
+			help="Checks for new mails")
+	parser.add_option("-s", "--test-send-mail", action="store_true", dest="send_mail",
 			help="Checks for new mails")
 
 	return parser.parse_args()
@@ -150,6 +222,13 @@ class MapClient:
 	def update_inbox(self):
 		self.map.UpdateInbox()
 
+	def send_mail (self):
+		prop = dict();
+		prop["Charset"] = "UTF-8"
+		prop["Transparent"] = False
+		prop["Retry"] = True
+		self.map.SetFolder("/telecom/msg/outbox")
+		self.map.PushMessage ("/telecom/msg/outbox", prop, phone)
 
 if  __name__ == '__main__':
 
@@ -203,5 +282,8 @@ if  __name__ == '__main__':
 
 	if options.update_inbox:
 		map_client.update_inbox()
+
+	if options.send_mail:
+		map_client.send_mail()
 
 	mainloop.run()

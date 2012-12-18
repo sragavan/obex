@@ -1296,6 +1296,113 @@ fail:
 	return reply;
 }
 
+static void push_message_cb(struct obc_session *session,
+				struct obc_transfer *transfer,
+				GError *err, void *user_data)
+{
+	struct map_data *map = user_data;
+	DBusMessage *reply;
+
+	if (err != NULL) {
+		reply = g_dbus_create_error(map->msg,
+						ERROR_INTERFACE ".Failed",
+						"%s", err->message);
+		goto done;
+	}
+
+	reply = dbus_message_new_method_return(map->msg);
+
+done:
+	g_dbus_send_message(conn, reply);
+	dbus_message_unref(map->msg);
+}
+
+static DBusMessage *map_push_message(DBusConnection *connection,
+					DBusMessage *message, void *user_data)
+{
+	struct map_data *map = user_data;
+	DBusMessage *reply;
+	struct obc_transfer *transfer;
+	GError *err = NULL;
+	DBusMessageIter args;
+	DBusMessageIter array;
+	const char *folder = NULL;
+	gboolean transparent, retry;
+	const char *charset = NULL;
+	const char *msg = NULL;
+	GObexApparam *apparam = NULL;
+
+	dbus_message_iter_init(message, &args);
+
+	if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_STRING)
+		return g_dbus_create_error(message,
+				ERROR_INTERFACE ".InvalidArguments", NULL);
+
+	dbus_message_iter_get_basic(&args, &folder);
+	dbus_message_iter_next(&args);
+
+	if (dbus_message_iter_get_arg_type(&args) != DBUS_TYPE_ARRAY)
+		return NULL;
+
+	dbus_message_iter_recurse(&args, &array);
+	while (dbus_message_iter_get_arg_type(&array) == DBUS_TYPE_DICT_ENTRY) {
+		const char *key;
+		DBusMessageIter value, entry;
+		DBusMessageIter v;
+
+		dbus_message_iter_recurse(&array, &entry);
+		dbus_message_iter_get_basic(&entry, &key);
+		dbus_message_iter_next(&entry);
+		dbus_message_iter_recurse(&entry, &value);
+
+		if (strcasecmp(key, "Transparent") == 0)
+			dbus_message_iter_get_basic(&value, &transparent);
+		else if (strcasecmp(key, "Retry") == 0)
+			dbus_message_iter_get_basic(&value, &retry);
+		else if (strcasecmp(key, "Charset") == 0)
+			dbus_message_iter_get_basic(&value, &charset);
+
+		dbus_message_iter_next(&array);
+	}
+	dbus_message_iter_next(&args);
+	dbus_message_iter_get_basic(&args, &msg);
+
+	/* Check for mandatory params. */
+	if (charset == NULL || folder == NULL || msg == NULL)
+		return g_dbus_create_error(message,
+				ERROR_INTERFACE ".InvalidArguments", NULL);
+
+	apparam = g_obex_apparam_set_uint8(NULL, MAP_AP_TRANSPARENT,
+							transparent ? 1 : 0);
+	apparam = g_obex_apparam_set_uint8(apparam, MAP_AP_RETRY,
+							retry ? 1 : 0);
+	apparam = g_obex_apparam_set_uint8(apparam, MAP_AP_CHARSET,
+			(strcmp(charset, "UTF-8") == 0) ? CHARSET_UTF8 : 0);
+
+	transfer = obc_transfer_put("x-bt/message", folder, NULL,
+						msg, strlen(msg),
+						&err);
+
+	printf("Sending: %s %s %d\n%s\n", folder, charset, strlen(msg), msg);
+	if (transfer == NULL)
+		goto fail;
+
+	obc_transfer_set_apparam(transfer, apparam);
+	map->msg = dbus_message_ref(message);
+
+	if (!obc_session_queue(map->session, transfer, push_message_cb,
+								map, &err))
+		goto fail;
+
+	return NULL;
+
+fail:
+	reply = g_dbus_create_error(message, ERROR_INTERFACE ".Failed", "%s",
+								err->message);
+	g_error_free(err);
+	return reply;
+}
+
 static const GDBusMethodTable map_methods[] = {
 	{ GDBUS_ASYNC_METHOD("SetFolder",
 				GDBUS_ARGS({ "name", "s" }), NULL,
@@ -1316,6 +1423,11 @@ static const GDBusMethodTable map_methods[] = {
 			NULL,
 			NULL,
 			map_update_inbox) },
+	{ GDBUS_ASYNC_METHOD("PushMessage",
+			GDBUS_ARGS({ "folder", "s" }, { "params", "a{sv}" },
+				{"message", "s"}),
+			NULL,
+			map_push_message) },
 	{ }
 };
 
